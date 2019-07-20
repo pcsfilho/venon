@@ -34,6 +34,7 @@ def create_foreing_rows(tables, table_name, foreing_keys, values_parent, columns
         
         create_row(table_fk, fm, tables, fk_column, values_parent[columns_parent.index(column)])
 
+
 def create_row(table, fm, tables, column=None, value=None):
     if column:
         placeholder_str = sql.SQL("SELECT * FROM {} WHERE {} = {}").format(
@@ -89,6 +90,8 @@ def create_row(table, fm, tables, column=None, value=None):
     
     if table in tables:
         tables.remove(table)
+
+        
 def isInt(s):
     try: 
         return int(s)
@@ -100,6 +103,7 @@ def main():
         start_table = input('Enter start table name: ')
         id = isInt(input('Enter profile id: '))
         only = input('Get only rows relationships from start table (y/n): ')
+
         if id:
             tables = inspector.get_table_names()
             with open("database/dump_models.sql",'w+') as f:
@@ -115,6 +119,7 @@ def main():
     except DatabaseError as e:
         print('Error {}'.format(e.pgerror))
         sys.exit(1)
+
     finally:
         if conn:
             conn.close()
